@@ -11,6 +11,33 @@ Wherever others expression evaluators like groovy, xpath, header or ogln are use
 * [Official reference](http://static.springsource.org/spring/docs/current/spring-framework-reference/html/expressions.html).
 * Very good [tutorial](http://dhruba.name/2009/12/30/spring-expression-language-spel-primer/).
 
+# Installation
+The expresion evaluator can either be installed for all applications running within the Mule instance or can be setup to be used for a single application.
+
+## All Applications
+Download the connector from the link above and place the resulting jar file in /lib/user directory of the Mule installation folder.
+
+## Single Application
+To make the SpEL expression evaluator available only to single application then place it in the	lib directory of the application otherwise if using Maven to compile and deploy your application the following can be done:
+
+Add the expresion evaluator's maven repo to your pom.xml:
+
+	<repositories>
+	    <repository>
+	        <id>muleforge-releases</id>
+	        <name>MuleForge Snapshot Repository</name>
+	        <url>http://repository.mulesoft.org/releases/</url>
+	        <layout>default</layout>
+	    </repository>
+	</repositories>
+
+Add the connector as a dependency to your project. This can be done by adding the following under the dependencies element in the pom.xml file of the application:
+
+	<dependency>
+	    <groupId>org.mule.modules</groupId>
+	    <artifactId>mule-module-spel</artifactId>
+	    <version>1.0-SNAPSHOT</version>
+	</dependency>
 
 # Usage
 ## Special Variables
@@ -50,6 +77,5 @@ In SpEL, beans can be accessed using `@beanname`. Mule registry entries, and thu
     <expression-transformer>
         <return-argument evaluator="custom" custom-evaluator="spel" expression="@myBittenApple.bitten"/>
     </expression-transformer>
-
 
 
