@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+          xmlns:client="http://www.mulesoft.org/schema/mule/client"
+        xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd
+        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/3.1/mule-test.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/3.1/mule-vm.xsd
+        http://www.mulesoft.org/schema/mule/client http://www.mulesoft.org/schema/mule/client/3.1/mule-client.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<spring:beans>
+		<spring:bean name="myBittenApple" class="org.mule.tck.testmodels.fruit.Apple">
+			<spring:property name="bitten" value="true" />
+		</spring:bean>
+	</spring:beans>
+
+
+    <flow name="test-expression-transformer">
+        <vm:inbound-endpoint path="in-expression-transformer" exchange-pattern="request-response"/>
+    	
+        <expression-transformer>
+    		<return-argument evaluator="custom" custom-evaluator="spel" expression="'hello' "/>
+    		<return-argument evaluator="custom" custom-evaluator="spel" expression="#id "/>
+	    </expression-transformer>
+
+        <vm:outbound-endpoint path="out"/>
+    </flow>
+    
+    <flow name="test-properties-transformer">
+        <vm:inbound-endpoint path="in-properties-transformer" exchange-pattern="request-response"/>
+    	
+    	<message-properties-transformer>
+    		<add-message-property key="1" value="#[spel:'hello' ]"/>
+    		<add-message-property key="2" value="#[spel:#id]"/>
+		</message-properties-transformer>
+
+        <vm:outbound-endpoint path="out"/>
+    </flow>
+    
+    <flow name="test-expression-filter">
+        <vm:inbound-endpoint path="in-expression-filter" exchange-pattern="request-response">
+        	<expression-filter evaluator="custom" customEvaluator="spel" expression="true"/>
+        </vm:inbound-endpoint>
+    	    	
+     	<test:component appendString="passed"/>
+		
+        <vm:outbound-endpoint path="out"/>
+    </flow>
+    
+    <flow name="test-bean-resolution">
+        <vm:inbound-endpoint path="in-bean-resolution" exchange-pattern="request-response" />
+    	    	
+     	<expression-transformer>
+    		<return-argument evaluator="custom" custom-evaluator="spel" expression="@myBittenApple.bitten"/>
+	    </expression-transformer>
+		
+        <vm:outbound-endpoint path="out"/>
+    </flow>
+    
+    <flow name="test-system-properties">
+        <vm:inbound-endpoint path="in-system-properties" exchange-pattern="request-response" />
+    	    	
+     	<expression-transformer>
+    		<return-argument evaluator="custom" custom-evaluator="spel" expression="@systemProperties"/>
+    		<return-argument evaluator="custom" custom-evaluator="spel" expression="@systemEnvironment"/>
+    		<return-argument evaluator="custom" custom-evaluator="spel" expression="#systemProperties"/>
+    		<return-argument evaluator="custom" custom-evaluator="spel" expression="#systemEnvironment"/>
+	    </expression-transformer>
+		
+        <vm:outbound-endpoint path="out"/>
+    </flow>
+    
+</mule>

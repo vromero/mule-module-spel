@@ -1,0 +1,10 @@
+                  
+Retrieve the application context and make the spring beans available through @beanName.
+
+Once JUnit 4 (with FunctionalTestCase support) is relased on Mule 3.1.2, use it.
+
+Test properly the SpEL annotation.
+
+
+
+
