@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.mule.modules</groupId>
-		<artifactId>mule-modules</artifactId>
-		<version>3.1.0</version>
-	</parent>
-
-	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mule.modules</groupId>
 	<artifactId>mule-module-spel</artifactId>
 	<packaging>jar</packaging>
 	<name>Mule SpEL Module</name>
 	<version>1.0-SNAPSHOT</version>
 	<description>Support for "Spring Expression Language" expressions</description>
-	<url>http://www.mulesoft.org/muleforge/spel-expression-evaluator</url>
+	<url>https://github.com/vromero/mule-module-spel</url>
 
 	<developers>
 		<developer>
@@ -23,94 +18,28 @@
 			<email>victor.romero@gmail.com</email>
 		</developer>
 	</developers>
+	
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/vromero/mule-module-spel/issues</url>
+	</issueManagement>
 
-	<properties>
-		<mule.version>3.1.0</mule.version>
-		<!-- Tools properties -->
-		<eclipsePluginVersion>2.5</eclipsePluginVersion>
-		<vmtype>org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType</vmtype>
-		<jdk5Name>J2SE-1.5</jdk5Name>
-		<jdk.version>1.5</jdk.version>
-	</properties>
+	<scm>
+		<connection>scm:git:https://vromero@github.com/vromero/mule-module-spel.git</connection>
+		<developerConnection>scm:svn:git://github.com/vromero/mule-module-spel.git</developerConnection>
+	</scm>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-					<encoding>ISO-8859-1</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>${eclipsePluginVersion}</version>
-				<configuration>
-					<!-- by default download all sources when generating project files -->
-					<downloadSources>true</downloadSources>
-					<classpathContainers>
-						<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER/${vmtype}/${jdk5Name}
-                        </classpathContainer>
-					</classpathContainers>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-idea-plugin</artifactId>
-				<configuration>
-					<downloadSources>true</downloadSources>
-					<jdkName>${jdk.version}</jdkName>
-				</configuration>
-			</plugin>
-
-			<!-- Responsible for creating the release distribution for this project -->
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<finalName>${artifactId}-${version}</finalName>
-					<descriptors>
-						<descriptor>src/main/assembly/assembly.xml</descriptor>
-					</descriptors>
-					<appendAssemblyId>false</appendAssemblyId>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.0-beta-7</version>
-				<configuration>
-					<!-- We only do this at release time. However, before doing a release 
-						of your project and deploying it you nedd to run 'mvn assembly:assembly' 
-						and check that the distribution is created correctly -->
-					<preparationGoals>assembly:assembly</preparationGoals>
-				</configuration>
-			</plugin>
-			
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.mule</groupId>
-                        <artifactId>mule-buildtools</artifactId>
-                        <version>${mule.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-		</plugins>
-	</build>
+    <properties>
+        <muleVersion>3.1.1</muleVersion>
+		<springVersion>3.0.3.RELEASE</springVersion>
+    </properties>
 
 	<dependencies>
 		<!-- Spring Dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.0.3.RELEASE</version>
+			<version>${springVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -118,7 +47,7 @@
 		<dependency>
 			<groupId>org.mule</groupId>
 			<artifactId>mule-core</artifactId>
-			<version>${mule.version}</version>
+			<version>${muleVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 				
@@ -126,7 +55,7 @@
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-module-spring-config</artifactId>
-			<version>${mule.version}</version>
+			<version>${muleVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -134,7 +63,7 @@
 		<dependency>
 			<groupId>org.mule.transports</groupId>
 			<artifactId>mule-transport-vm</artifactId>
-			<version>${mule.version}</version>
+			<version>${muleVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -142,7 +71,7 @@
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-module-client</artifactId>
-			<version>${mule.version}</version>
+			<version>${muleVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -150,7 +79,7 @@
 		<dependency>
 			<groupId>org.mule.tests</groupId>
 			<artifactId>mule-tests-functional</artifactId>
-			<version>${mule.version}</version>
+			<version>${muleVersion}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -168,52 +97,62 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
+			<version>1.8.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
-	<!-- Mule Forge Configuration -->
-	<issueManagement>
-		<system>Google code</system>
-		<url>http://code.google.com/p/mule-module-spel/issues</url>
-	</issueManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
-	<scm>
-		<connection>scm:svn:http://mule-module-spel.googlecode.com/svn/trunk/</connection>
-		<developerConnection>scm:svn:https://mule-module-spel.googlecode.com/svn/trunk/</developerConnection>
-		<tag>HEAD</tag>
-		<url>http://mule-module-spel.googlecode.com/svn</url>
-	</scm>
+    <distributionManagement>
+        <repository>
+            <id>muleforge-releases</id>
+            <url>https://repository.mulesoft.org/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>muleforge-snapshots</id>
+            <url>https://repository.mulesoft.org/snapshots/</url>
+	    	<uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
 
-	<distributionManagement>
-		<repository>
-			<id>mulesoft.releases</id>
-			<name>MuleForge Releases Repository</name>
-			<url>https://repository.mulesoft.org/releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>mulesoft.snapshots</id>
-			<name>MuleForge Snapshots Repository</name>
-			<url>https://repository.mulesoft.org/snapshots/</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
-
-	<!-- End of MuleForge Configuration -->
-
-	<repositories>
-		<repository>
-			<id>muleforge-repo</id>
-			<name>MuleForge Repository</name>
-			<url>http://repository.muleforge.org</url>
-			<layout>default</layout>
-		</repository>
-
-		<repository>
-			<id>codehaus-repo</id>
-			<name>Codehaus Repository</name>
-			<url>http://dist.codehaus.org/mule/dependencies/maven2</url>
-			<layout>default</layout>
-		</repository>
+    <repositories>
+    	<repository>
+        	<id>mule-deps</id>
+        	<name>Mule Dependencies</name>
+        	<url>http://dist.codehaus.org/mule/dependencies/maven2</url>
+        	<snapshots>
+            	<enabled>false</enabled>
+        	</snapshots>
+    	</repository>
+    	<repository>
+       		<id>jboss</id>
+       		<url>https://repository.jboss.org/nexus/content/repositories/</url>
+    	</repository>   
+    	<repository>
+        	<id>new-mule-forge</id>
+        	<name>Mule Forge Dependencies</name>
+        	<url>https://repository.mulesoft.org/nexus/content/repositories/releases/</url>
+        	<snapshots>
+            	<enabled>true</enabled>
+        	</snapshots>
+    	</repository>
 	</repositories>
+
 </project>
