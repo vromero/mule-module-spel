@@ -36,7 +36,7 @@ Add the connector as a dependency to your project. This can be done by adding th
 	<dependency>
 	    <groupId>org.mule.modules</groupId>
 	    <artifactId>mule-module-spel</artifactId>
-	    <version>1.0-SNAPSHOT</version>
+	    <version>1.0</version>
 	</dependency>
 
 # Usage
